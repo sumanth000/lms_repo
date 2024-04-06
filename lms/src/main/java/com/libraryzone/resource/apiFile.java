@@ -236,7 +236,7 @@ public class apiFile {
                     "bc.serial_number, bc.availability_status " +
                     "FROM borrowing_history bh " +
                     "INNER JOIN book_copies bc ON bh.serial_number = bc.serial_number AND bh.book_isbn = bc.isbn " +
-                    "WHERE bh.borrower_id = ? OR bh.return_date IS NULL";
+                    "WHERE bh.borrower_id = ? ";
 
             List<Map<String, Object>> borrowingHistoryList = jdbcTemplate.queryForList(sql, borrowerId);
 
