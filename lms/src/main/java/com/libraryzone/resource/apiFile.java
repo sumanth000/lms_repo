@@ -139,7 +139,7 @@ public class apiFile {
         // Implement logic to insert book copies into 'book_copies' table
         // This is a placeholder method; replace it with actual database interaction logic
         // Example: Execute SQL INSERT statements
-        String insertCopySql = "INSERT INTO book_copies (isbn) VALUES (?)";
+        String insertCopySql = "INSERT INTO book_copies (isbn,availability_status) VALUES (?,TRUE)";
         for (int i = 0; i < copies; i++) {
             jdbcTemplate.update(insertCopySql, isbn);
         }
