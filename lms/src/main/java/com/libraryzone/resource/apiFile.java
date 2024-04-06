@@ -115,6 +115,36 @@ public class apiFile {
         return new ArrayList<>(bookMap.values());
     }
 
+    @PostMapping("/add/book/copies")
+    public ResponseEntity<String> addBookAndCopies(@RequestBody BookVo bookVO) {
+        try {
+            // Add the book details to the 'books' table
+            String insertBookSql = "INSERT INTO books (isbn, title, author, genre, publication_year) VALUES (?, ?, ?, ?, ?)";
+            jdbcTemplate.update(insertBookSql, bookVO.getIsbn(), bookVO.getTitle(), bookVO.getAuthor(), bookVO.getGenre(), bookVO.getPublicationYear());
+
+            // If copies are specified, insert records into 'book_copies' table
+            int copies = bookVO.getCopies(); // Get the number of copies from the request
+            if (copies > 0) {
+                insertBookCopies(bookVO.getIsbn(), copies); // Insert book copies into 'book_copies' table
+            }
+
+            return ResponseEntity.ok("Book added successfully!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add book");
+        }
+    }
+
+    private void insertBookCopies(String isbn, int copies) {
+        // Implement logic to insert book copies into 'book_copies' table
+        // This is a placeholder method; replace it with actual database interaction logic
+        // Example: Execute SQL INSERT statements
+        String insertCopySql = "INSERT INTO book_copies (isbn) VALUES (?)";
+        for (int i = 0; i < copies; i++) {
+            jdbcTemplate.update(insertCopySql, isbn);
+        }
+    }
+
     @PostMapping("/add/book")
     public ResponseEntity<String> addBook(@RequestBody BookVo bookVO) {
         String sql = "INSERT INTO books (isbn, title, author, genre, publication_year) VALUES (?, ?, ?, ?, ?)";

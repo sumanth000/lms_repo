@@ -8,6 +8,17 @@ public class BookVo{
     private String author;
     private String genre;
     private int publicationYear;
+
+    private int copies;
+
+    public int getCopies() {
+        return copies;
+    }
+
+    public void setCopies(int copies) {
+        this.copies = copies;
+    }
+
     public String getIsbn() {
         return isbn;
     }
